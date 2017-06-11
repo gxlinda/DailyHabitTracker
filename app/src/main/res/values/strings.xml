@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Daily habits</string>
+    <string name="editor_activity_title_new_habit">Add a habit</string>
+    <string name="habit_name">Habit</string>
+    <string name="hint_habit_name">Name of your habit</string>
+    <string name="habit_place">Place</string>
+    <string name="hint_habit_place">Where will you do it?</string>
+    <string name="habit_time">Time</string>
+    <string name="change_time">Change time</string>
+    <string name="action_save">Save habit</string>
+    <string name="action_insert_dummy_data">Add dummy habit</string>
+</resources>

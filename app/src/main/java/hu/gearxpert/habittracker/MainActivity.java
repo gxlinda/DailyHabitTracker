@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        displayDatabaseInfo();
+        Cursor cursor = readHabitsDatabase();
+        displayDatabaseInfo(cursor);
     }
 
-    private void displayDatabaseInfo() {
-        // Create and/or open a database to read from it
+    private Cursor readHabitsDatabase() {
+        // Create and/or open a database to read from it, returns a Cursor
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         String[] projection = {
                 HabitEntry._ID,
                 HabitEntry.COLUMN_HABIT_NAME,
@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 null,
                 null);
 
+        return cursor;
+    }
+
+    private void displayDatabaseInfo(Cursor cursor) {
+        // Display data we get from Cursor object
         TextView displayView = (TextView) findViewById(R.id.text_view_habit);
 
         try {
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } finally {
-            // Always close the cursor when you're done reading from it. This releases all its
+            // Close the cursor when we're done reading from it. This releases all its
             // resources and makes it invalid.
             cursor.close();
         }
@@ -122,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         // Create a ContentValues object where column names are the keys,
-        // and Toto's pet attributes are the values.
+        // and Learning Android's attributes are the values.
         ContentValues values = new ContentValues();
         values.put(HabitEntry.COLUMN_HABIT_NAME, "Learning Android");
         values.put(HabitEntry.COLUMN_HABIT_PLACE, "At home");
@@ -149,13 +154,14 @@ public class MainActivity extends AppCompatActivity {
             // Respond to a click on the "Add dummy habit" menu option
             case R.id.action_insert_dummy_data:
                 insertHabit();
-                displayDatabaseInfo();
+                Cursor cursor = readHabitsDatabase();
+                displayDatabaseInfo(cursor);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //adds a leading 0 to time if the value is smaller than 10
+    //Adds a leading 0 to time if the value is smaller than 10
     private static String pad(int c) {
         if (c >= 10)
             return String.valueOf(c);
